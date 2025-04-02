@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../views/Home";
 
-import AlunoRoutes from "./AlunoRoutes";
+import AERouter from "./ae/AERoutes";
 
 export default function AppRouter()
 {
@@ -10,7 +10,7 @@ export default function AppRouter()
     <Router>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/aluno/*" element={<AlunoRoutes/>} />
+        <Route path="/AssistenciaEstudantil/*" element={<AERouter/>} />
       </Routes>
     </Router>
   )

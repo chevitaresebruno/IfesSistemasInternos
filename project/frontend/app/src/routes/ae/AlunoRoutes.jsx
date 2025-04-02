@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
-import AlunoForm from '../views/crud/aluno/AlunoForm';
-import AlunoList from '../views/crud/aluno/AlunoList';
-import AlunoRead from '../views/crud/aluno/AlunoRead';
+import AlunoForm from '../../views/ae/crud/aluno/AlunoForm';
+import AlunoList from '../../views/ae/crud/aluno/AlunoList';
+import AlunoRead from '../../views/ae/crud/aluno/AlunoRead';
 
 
 const AlunoRoutes = () => (
