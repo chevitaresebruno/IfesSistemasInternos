@@ -32,8 +32,6 @@ permite que os clientes visualizem dados dos alunos. A seguir, detalhamos os pri
 
 ## 🎨 Protótipo de Telas
 
-Cada funcionalidade descrita no backlog possui ao menos uma tela representando sua interface esperada.
-
 ### 🖼️ Protótipo do Requisito HU-1
 
 ![Protótipo da tela de listagem de produtos](wireframe1.png)
@@ -43,9 +41,9 @@ Cada funcionalidade descrita no backlog possui ao menos uma tela representando s
 
 ## 🏗 Análise e Projeto 
 
-O projeto  do sistema 
+O projeto  do sistema:
 
-### Modelo 
+### Diagrama de classes
 
 ![alt text](class_diagram.png)
 
@@ -55,33 +53,12 @@ O projeto  do sistema
 ![alt text](image.png)
 
 
-### Autorização  e Autenticação 
-A autorização no Strapi (a partir do v4 e mantida no v5) é baseada em perfis de usuários (roles) e permissões atribuídas a esses perfis. Ela define o que cada usuário pode ou não pode fazer ao interagir com os endpoints da API.
-
-1. Tipos de usuários
-O Strapi tem dois contextos principais de usuários:
-
-🔹 Usuários Autenticados
-Criados via cadastro/login na API pública.
-
-Associados a uma role do tipo “Authenticated” ou outra personalizada.
-
-Usam token JWT para acesso autenticado.
-
-🔸 Usuários Administrativos
-Criados via painel de administração do Strapi.
-
-Usam o Strapi Admin Panel.
-
-Gerenciados separadamente e com permissões diferentes.
-
+### Autorização e Autenticação 
 
 ### Tecnologias a serem utilizadas 
-Strapi, HTML, CSS, SQLITE....
+HTML, CSS, REACT, JavaScript
 
 ---
 
 ### Telas do sistema
 
-![alt text](tela1-1.png)
-**Figura 2**: Tela de listagem de produtos com imagem, nome e preço — correspondente à história de usuário HU-1.
