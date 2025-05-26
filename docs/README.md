@@ -70,5 +70,3 @@ HTML, CSS, REACT, JavaScript
 
 ---
 
-### Telas do sistema
-
