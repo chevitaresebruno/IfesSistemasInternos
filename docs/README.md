@@ -32,22 +32,20 @@ permite que os clientes visualizem dados dos alunos. A seguir, detalhamos os pri
 
 ## 🎨 Protótipo de Telas
 
-## 🎨 Protótipo de Telas
-
 ![Protótipo da tela de login](./prototipos/tela1.PNG)
-**Figura 1**: Tela de login com áres de usuário, senha e acesso.
+  **Figura 1**: Tela de login com áres de usuário, senha e acesso.
 
 ![Protótipo da tela de cadastro](./prototipos/tela2.PNG)
-**Figura 2**: Tela de cadastro do servidor, para o preenchimento de nome, CPF, matrícula institutcional e senha.
+  **Figura 2**: Tela de cadastro do servidor, para o preenchimento de nome, CPF, matrícula institutcional e senha.
 
 ![Protótipo da tela de painel](./prototipos/tela3.PNG)
-**Figura 3**: Tela de painel, contendo resumo de solicitações pendentes, busca personalizada e relatório diversos.
+  **Figura 3**: Tela de painel, contendo resumo de solicitações pendentes, busca personalizada e relatório diversos.
 
 ![Protótipo da tela de acompanhamento](./prototipos/tela4.PNG)
-**Figura 4**: Tela de acompanhamento, contendo tabelas com status, datas, observações da análise e opção de visualizar detalhes.
+  **Figura 4**: Tela de acompanhamento, contendo tabelas com status, datas, observações da análise e opção de visualizar detalhes.
 
 ![Protótipo da tela de análise](./prototipos/tela5.PNG)
-**Figura 5**: Tela de análise, visualiza todas as informações da solicitação, contém botões Aprovar, Rejeitar, Solicitar mais informações, campo para observações, detalhes e acesso a documentos.
+  **Figura 5**: Tela de análise, visualiza todas as informações da solicitação, contém botões Aprovar, Rejeitar, Solicitar mais informações, campo para observações, detalhes e acesso a documentos.
 
 ---
 
