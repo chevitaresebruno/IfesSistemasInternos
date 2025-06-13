@@ -1,4 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
 from .models import *
 from .serializers import *
 
@@ -26,12 +30,22 @@ class CourseViewSet(ModelViewSet):
 class StatusAcademicViewSet(ModelViewSet):
     queryset = StatusAcademic.objects.all()
     serializer_class = StatusAcademicSerializer
-    
-"""
-class StudentCreateApiView(serializers.ViewSet):
-    queryset = Student.objects.all()
-    serializer_class = StudentCreateSerializer
-"""
+
+class StudentCreateApiView(APIView):
+    @swagger_auto_schema(
+        operation_description="Create a new student.",
+        request_body=StudentCreateSerializer,
+        responses={201: StudentCreateSerializer, 400: 'Validation Error'}
+    )
+    def post(self, request, *args, **kwargs):
+        serializer = StudentCreateSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            student = serializer.save()
+            
+            return Response(StudentCreateSerializer(student).data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class StudentViewSet(ModelViewSet):
     queryset = Student.objects.all()

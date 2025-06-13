@@ -12,5 +12,6 @@ router.register(r'student', StudentViewSet)
 
 # URLs do app (API + Swagger)
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('student/new/', StudentCreateApiView.as_view(), name='student_create')
 ]
