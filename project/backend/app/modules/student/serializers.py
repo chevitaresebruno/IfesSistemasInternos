@@ -33,25 +33,40 @@ class StatusAcademicSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class StudentCreateSerializer(serializers.ModelSerializer):
-    phone = serializers.CharField()
-    email = serializers.EmailField()
+    phone = PhoneSerializer(many=True)
+    email = EmailSerializer(many=True)
     
     class Meta:
         model = Student
         fields = '__all__'
                 
     def create(self, validated_data) -> Student:
-        phone = validated_data.pop("phone")
-        email = validated_data.pop("email")
+        phones = validated_data.pop("phone")
+        emails = validated_data.pop("email")
+        student = Student.objects.create(**validated_data)
+    
+        for phone_data in phones:        
+            phone = Phone.objects.create(**phone_data)
+            student.phone.add(phone)
         
-        phone, _ = Phone.objects.create(ddd=phone[:2], numero=phone[2:])
-        email, _ = Email.objects.create(mail=email)
+        for email_data in emails:
+            email = Email.objects.create(**email_data)
+            student.email.add(email)
         
-        return Student.objects.create(phone=phone, email=email, **validated_data)
+        return student
 
 class StudentSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+    course = serializers.SerializerMethodField()
+    
     class Meta:
         model = Student
         fields = '__all__'
+    
+    def get_status(self, obj: Student):
+        return obj.getStatus()
+    
+    def get_course(self, obj: Student):
+        return obj.getCourse()
     
     

@@ -14,19 +14,19 @@ class Bank(models.Model):
     name = models.CharField(max_length=20)
     
 class BankAccountType(models.Model):
-    texto = models.CharField(max_length=30)
+    texto = models.CharField(max_length=50)
     
 class Course(models.Model):
     abr = models.CharField(max_length=10)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=80)
     
 class StatusAcademic(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
 
 # Complex Models
 
 class Person(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=80)
     cpf = CPFField('cpf')
     bornDate = models.DateField()
     phone = models.ManyToManyField(Phone, related_name="persons") # gambiarra para poder acessar telefones por Pessoa de formas mais simples
