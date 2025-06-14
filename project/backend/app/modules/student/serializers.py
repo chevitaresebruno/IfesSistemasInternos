@@ -58,6 +58,8 @@ class StudentCreateSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
     course = serializers.SerializerMethodField()
+    phone = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
     
     class Meta:
         model = Student
@@ -69,4 +71,8 @@ class StudentSerializer(serializers.ModelSerializer):
     def get_course(self, obj: Student):
         return obj.getCourse()
     
+    def get_phone(self, obj: Student):
+        return obj.getPhones()
     
+    def get_email(self, obj: Student):
+        return obj.getEmails()

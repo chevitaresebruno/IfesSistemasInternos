@@ -7,6 +7,12 @@ class Phone(models.Model):
     ddd = models.IntegerField()
     numero = models.IntegerField()
     
+    def getComplete(self) -> str:
+        return f"{self.ddd}{self.numero}"
+    
+    def getMasked(self) -> str:
+        return f"({self.ddd}) {self.numero}"
+    
 class Email(models.Model):
     mail = models.EmailField()
     
@@ -32,14 +38,19 @@ class Person(models.Model):
     phone = models.ManyToManyField(Phone, related_name="persons") # gambiarra para poder acessar telefones por Pessoa de formas mais simples
     email = models.ManyToManyField(Email, related_name="persons")
     
-    def delete(self, *arhs, **kwargs):
+    def delete(self, *args, **kwargs):
         phones = self.phone.all()
         for phone in phones:
             if phone.persons.count() == 0: phone.delete()
         mails = self.email.all()
         for mail in mails:
             if mails.persons.count() == 0: mail.delete()
-    
+            
+    def getPhones(self) -> list[str]:
+        return [phone.getComplete() for phone in self.phone.all()]
+
+    def getEmails(self) -> list[str]:
+        return [email.mail for email in self.email.all()]
 
 class Student(Person):
     ingresseDate = models.DateField()
