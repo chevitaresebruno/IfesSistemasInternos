@@ -1,6 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.authentication import TokenAuthentication
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from .models import *
@@ -32,12 +34,15 @@ class StatusAcademicViewSet(ModelViewSet):
     serializer_class = StatusAcademicSerializer
 
 class StudentCreateApiView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = [TokenAuthentication]
+    
     @swagger_auto_schema(
         operation_description="Create a new student.",
         request_body=StudentCreateSerializer,
-        responses={201: StudentCreateSerializer, 400: 'Validation Error'}
+        responses={201: StudentCreateSerializer, 400: 'Validation Error'},
     )
-    def post(self, request, *args, **kwargs):
+    def post(self, request, format = None):
         serializer = StudentCreateSerializer(data=request.data)
         
         if serializer.is_valid():

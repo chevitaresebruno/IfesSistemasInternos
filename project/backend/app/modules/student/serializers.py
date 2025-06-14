@@ -38,8 +38,8 @@ class StudentCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Student
-        exclude = []
-        
+        fields = '__all__'
+                
     def create(self, validated_data) -> Student:
         phone = validated_data.pop("phone")
         email = validated_data.pop("email")

@@ -8,10 +8,11 @@ router.register(r'email', EmailViewSet)
 router.register(r'bank', BankViewSet)
 router.register(r'banktype', BankAccountTypeViewSet)
 router.register(r'course', CourseViewSet)
+router.register(r'academicStatus', StatusAcademicViewSet)
 router.register(r'student', StudentViewSet)
 
 # URLs do app (API + Swagger)
 urlpatterns = [
+    path('student/new/', StudentCreateApiView.as_view()),
     path('', include(router.urls)),
-    path('student/new/', StudentCreateApiView.as_view(), name='student_create')
 ]
