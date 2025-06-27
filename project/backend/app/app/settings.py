@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
-    'rest_framework_swagger',
+    # 'rest_framework_swagger', # aparentemente, substituido pelo drf_yasg
     'corsheaders',
     'drf_yasg',
     'cpf_field',
