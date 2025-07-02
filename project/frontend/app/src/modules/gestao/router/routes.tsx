@@ -3,7 +3,7 @@ import { Navigate, RouteObject } from 'react-router-dom';
 import { ManageStudentRoutes } from './ManageStudent';
 
 const TestViewPage = lazy(() => import('../views/TestView'));
-
+const DashboardPage = lazy(() => import('../views/managerStudent/Dashboard'));
 
 export const GestaoRoutes: RouteObject[] = [
   {
@@ -17,6 +17,10 @@ export const GestaoRoutes: RouteObject[] = [
   {
     index: true,
     element: <Navigate to='' replace />,
+  },
+  {
+    path: 'Dashboard',
+    element: <DashboardPage />,
   },
 ];
 

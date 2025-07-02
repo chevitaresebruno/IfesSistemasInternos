@@ -9,7 +9,7 @@ const DefaultLayout: React.FC = () => {
           <Link to="/" style={{ marginRight: '1rem' }}>
             Home
           </Link>
-          <Link to="/dashboard" style={{ marginRight: '1rem' }}>
+          <Link to="/gestao/dashboard" style={{ marginRight: '1rem' }}>
             Dashboard
           </Link>
           <Link to="/login">Login</Link>
@@ -21,7 +21,7 @@ const DefaultLayout: React.FC = () => {
       </main>
 
       <footer style={{ padding: '1rem', background: '#f0f0f0', marginTop: '2rem' }}>
-        <p>© 2024 Minha Aplicação Incrível</p>
+        <p>© 2025 Sistemas Internos - Ifes</p>
       </footer>
     </div>
   );
