@@ -65,4 +65,3 @@ export const darkTheme: Theme = createTheme({
     // O MUI pode ajustar automaticamente as cores da tipografia com base no modo
   },
 });
-
