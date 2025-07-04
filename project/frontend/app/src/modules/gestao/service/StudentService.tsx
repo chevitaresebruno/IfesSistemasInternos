@@ -23,7 +23,7 @@ export default class StudentService extends CrudService<Student>
 
     public async new(student: StudentNew): Promise<any>
     {
-        return (await api.post(`${this.url}new/`, student)).data;
+        return (await api.post(`${this.url}/`, student)).data;
     }
 }
 

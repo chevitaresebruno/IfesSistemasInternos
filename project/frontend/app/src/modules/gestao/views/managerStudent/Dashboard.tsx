@@ -13,8 +13,9 @@ export default function Dashboard() {
 
   const loadStudents = async () => {
     const data = await studentService.list();
+    console.log("📦 Dados recebidos do backend:", data);
     // Ensure each student has the required properties for StudentRead
-    const studentsRead: StudentRead[] = data.map((student: any) => ({
+    const studentsRead: StudentRead[] = (data ?? []).map((student: any) => ({
       id: student.id,
       name: student.name,
       matrCode: student.matrCode,
@@ -57,7 +58,7 @@ export default function Dashboard() {
       />
 
       <Paper sx={{ p: 2 }}>
-        {students.map((student) => (
+        {students?.map((student) => (
           <Box
             key={student.id}
             sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}
