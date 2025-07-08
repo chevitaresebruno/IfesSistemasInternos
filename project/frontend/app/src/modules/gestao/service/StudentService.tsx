@@ -11,7 +11,7 @@ export default class StudentService extends CrudService<Student>
         super("student");
     }
 
-    override async list(): Promise<Student[]>
+    override async list(): Promise<StudentRead[]>
     {
         return (await super.list()) as StudentRead[];    
     }
