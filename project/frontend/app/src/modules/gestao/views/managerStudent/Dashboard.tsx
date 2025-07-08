@@ -15,18 +15,7 @@ export default function Dashboard() {
     const data = await studentService.list();
     console.log("📦 Dados recebidos do backend:", data);
     // Ensure each student has the required properties for StudentRead
-    const studentsRead: StudentRead[] = (data ?? []).map((student: any) => ({
-      id: student.id,
-      name: student.name,
-      matrCode: student.matrCode,
-      phone: student.phone ?? '',
-      email: student.email ?? '',
-      cpf: student.cpf ?? '',
-      bornDate: student.bornDate ?? '',
-      ingresseDate: student.ingresseDate ?? '',
-      semester: student.semester ?? '',
-    }));
-    setStudents(studentsRead);
+    studentService.list().then((v)=> {setStudents(v)});
   };
 
   useEffect(() => {

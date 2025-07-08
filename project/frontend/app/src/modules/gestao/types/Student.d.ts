@@ -33,5 +33,6 @@ export interface StudentNew extends Student
 {
     phone: Phone[];
     email: Email[];
+    course: ID;
 }
 

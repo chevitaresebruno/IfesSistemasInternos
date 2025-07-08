@@ -21,7 +21,8 @@ export default function AddStudentModal({
     semester: 1,
     matrCode: '',
     phone: [],
-    email: []
+    email: [],
+    course: 0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
