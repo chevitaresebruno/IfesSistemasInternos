@@ -1,36 +1,23 @@
 import { Box, Button, IconButton, Paper, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from 'react';
-import StudentService from '../../service/StudentService';
-import { StudentRead, StudentNew } from '../../types/Student';
-import AddStudentModal from './AddStudentModal';
+import React, { useEffect, useState } from 'react';
+import StudentService from '../../../service/StudentService';
+import { StudentRead, StudentNew } from '../../../types/Student';
+import AddStudentModal from '../AddStudentModal';
+import StudentListTable from './table';
 
-const studentService = new StudentService();
 
-export default function Dashboard() {
+const StudentListView: React.FC = () =>
+{
   const [students, setStudents] = useState<StudentRead[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const studentService = new StudentService();
 
-  const loadStudents = async () => {
-    const data = await studentService.list();
-    console.log("📦 Dados recebidos do backend:", data);
-    // Ensure each student has the required properties for StudentRead
-    studentService.list().then((v)=> {setStudents(v)});
-  };
 
-  useEffect(() => {
-    loadStudents();
-  }, []);
+  useEffect(()=>{
+    studentService.list().then(setStudents);
+  }, []) // Gambiarra para só executar uma vez :D
 
-  const handleAdd = async (student: StudentNew) => {
-    await studentService.new(student);
-    await loadStudents();
-  };
-
-  const handleDelete = async (id: number) => {
-    await studentService.delete({ id } as any);
-    await loadStudents();
-  };
 
   return (
     <Box sx={{ p: 4 }}>
@@ -43,7 +30,11 @@ export default function Dashboard() {
       <AddStudentModal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        onSave={handleAdd}
+        onSave={()=>{}}
+      />
+
+      <StudentListTable
+        studentsList={students}
       />
 
       <Paper sx={{ p: 2 }}>
@@ -55,7 +46,7 @@ export default function Dashboard() {
             <Typography>
               {student.name} — Matrícula: {student.matricula}
             </Typography>
-            <IconButton onClick={() => handleDelete(Number(student.id))}>
+            <IconButton onClick={() => {}}>
               <DeleteIcon />
             </IconButton>
           </Box>
@@ -64,3 +55,7 @@ export default function Dashboard() {
     </Box>
   );
 }
+
+
+export default StudentListView;
+

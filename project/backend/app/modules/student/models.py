@@ -60,7 +60,7 @@ class Student(Person):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     
     def getMatricule(self) -> str:
-        return f"{self.ingresseDate.year}{self.semester.value}{self.course.abr}{self.matrCode}"
+        return f"{self.ingresseDate.year}{self.semester}{self.course.abr}{self.matrCode}"
     
     def getStatus(self) -> str:
         return self.status.name

@@ -60,10 +60,11 @@ class StudentSerializer(serializers.ModelSerializer):
     course = serializers.SerializerMethodField()
     phone = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
+    matricula = serializers.SerializerMethodField()
     
     class Meta:
         model = Student
-        fields = '__all__'
+        exclude = ['matrCode']
     
     def get_status(self, obj: Student):
         return obj.getStatus()
@@ -76,3 +77,6 @@ class StudentSerializer(serializers.ModelSerializer):
     
     def get_email(self, obj: Student):
         return obj.getEmails()
+    
+    def get_matricula(self, obj: Student):
+        return obj.getMatricule()

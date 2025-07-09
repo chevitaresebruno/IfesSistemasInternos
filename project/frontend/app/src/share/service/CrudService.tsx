@@ -12,7 +12,7 @@ export default class CrudService<T extends BaseEntity> extends BaseService
 
     public async list(): Promise<T[]>
     {
-        return (await (await api.get(this.url)).data).data as T[];
+        return await (await api.get(this.url)).data as T[];
     }
 
     public async getById(id: ID): Promise<T>

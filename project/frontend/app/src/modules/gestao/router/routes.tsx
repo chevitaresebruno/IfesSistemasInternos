@@ -11,7 +11,7 @@ export const GestaoRoutes: RouteObject[] = [
     element: <TestViewPage />,
   },
   {
-    path: 'ManagerStudent',
+    path: 'GerenciarEstudantes',
     children: ManageStudentRoutes,
   },
   {

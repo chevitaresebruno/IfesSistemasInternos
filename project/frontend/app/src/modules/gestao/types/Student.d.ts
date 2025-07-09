@@ -5,12 +5,13 @@ import { Phone } from "./Phone";
 
 export interface Student extends BaseEntity
 {
-  name: string;
-  cpf: string;
-  bornDate: Date;
-  ingresseDate: Date;
-  semester: 1 | 2,
-  matrCode: string,
+    name: string;
+    cpf: string;
+    bornDate: Date;
+    ingresseDate: Date;
+    semester: 1 | 2,
+    matricula: string,
+    course: string;
 }
 
 

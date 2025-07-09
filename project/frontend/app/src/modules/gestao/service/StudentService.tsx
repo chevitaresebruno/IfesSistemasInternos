@@ -25,5 +25,10 @@ export default class StudentService extends CrudService<Student>
     {
         return (await api.post(`${this.url}/`, student)).data;
     }
+
+    public static studentGetFullMat(student: Student): string
+    {
+        return `${student.ingresseDate.getFullYear()}${student}`;
+    }
 }
 

@@ -3,12 +3,12 @@ import {
   TextField, Button, Box
 } from '@mui/material';
 import { useState } from 'react';
-import { StudentNew } from '../../types/Student';
+import { StudentNew } from '../../../types/Student';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/pt-br';
 
-export default function AddStudentModal({
+export default function AddStudentView({
   open, onClose, onSave
 }: {
   open: boolean;
