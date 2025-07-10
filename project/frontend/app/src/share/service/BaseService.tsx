@@ -12,7 +12,7 @@ export default abstract class BaseService
 
     protected idUrl(id: ID): string
     {
-        return `${this.url}${id}`;
+        return `${this.url}/${id}/`;
     }
 }
 

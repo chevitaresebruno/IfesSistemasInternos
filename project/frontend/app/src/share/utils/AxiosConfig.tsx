@@ -23,7 +23,7 @@ export const refreshToken = async (): Promise<string> => {
     // 2. Fazer a chamada para o endpoint de refresh do backend.
     // O endpoint espera receber o refreshToken no corpo da requisição.
     const response = await axios.post<RefreshResponse>(
-      `${process.env.REACT_APP_API_URL}/api/token/refresh/`, // Seu endpoint de refresh
+      `${process.env.REACT_APP_API_URL}/token/refresh/`, // Seu endpoint de refresh
       {
         refreshToken: storedRefreshToken,
       }
