@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from cpf_field.models import CPFField
 
 # Base Models
@@ -46,6 +47,8 @@ class Person(models.Model):
         for mail in mails:
             if mails.persons.count() == 0: mail.delete()
             
+        super().delete(args, kwargs)
+            
     def getPhones(self) -> list[str]:
         return [phone.getComplete() for phone in self.phone.all()]
 
@@ -56,16 +59,44 @@ class Student(Person):
     ingresseDate = models.DateField()
     semester = models.IntegerField()
     matrCode = models.CharField(max_length=10)
-    status = models.ForeignKey(StatusAcademic, on_delete=models.PROTECT)
+    status = models.ForeignKey(StatusAcademic, on_delete=models.PROTECT, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     
     def getMatricule(self) -> str:
         return f"{self.ingresseDate.year}{self.semester}{self.course.abr}{self.matrCode}"
     
     def getStatus(self) -> str:
+        if(self.status == None):
+            return "indefinido"
         return self.status.name
     
     def getCourse(self) -> str:
         return self.course.name
+
+
+# Seção de Auxilios
+class AuxiolioTypeOptions(models.Choices):
+    "ALIMENTAÇÃO",
+    "UNIFORME",
+    "MORADIA",
     
+class AuxilioStatusOptions(models.Choices):
+    "AGUARDANDO ANÁLISE",
+    "APROVADO",
+    "REPROVADO"
+        
+        
+class Auxilio(models.Model):
+    _type = models.CharField(max_length=50, choices=AuxiolioTypeOptions)
+    status= models.CharField(max_length=20, choices=AuxilioStatusOptions, default="AGUARDANDO ANÁLISE")
+    
+    
+class AuxilioRelation(models.Model):
+    dataSolicitacao = models.DateField()
+    auxilio1 = models.ForeignKey(Auxilio, null=True, blank=True, on_delete=models.CASCADE, related_name="auxilio1")    
+    auxilio2 = models.ForeignKey(Auxilio, null=True, blank=True, on_delete=models.CASCADE, related_name="auxilio2")    
+    auxilio3 = models.ForeignKey(Auxilio, null=True, blank=True, on_delete=models.CASCADE, related_name="auxilio3")
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+        
     

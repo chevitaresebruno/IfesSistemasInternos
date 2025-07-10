@@ -38,8 +38,8 @@ class StudentCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Student
-        fields = '__all__'
-                
+        exclude = ["status"]
+
     def create(self, validated_data) -> Student:
         phones = validated_data.pop("phone")
         emails = validated_data.pop("email")
@@ -55,9 +55,10 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         
         return student
 
-class StudentSerializer(serializers.ModelSerializer):
+
+class StudentReadSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
-    course = serializers.SerializerMethodField()
+    course = CourseSerializer()
     phone = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     matricula = serializers.SerializerMethodField()
@@ -69,9 +70,6 @@ class StudentSerializer(serializers.ModelSerializer):
     def get_status(self, obj: Student):
         return obj.getStatus()
     
-    def get_course(self, obj: Student):
-        return obj.getCourse()
-    
     def get_phone(self, obj: Student):
         return obj.getPhones()
     
@@ -80,3 +78,43 @@ class StudentSerializer(serializers.ModelSerializer):
     
     def get_matricula(self, obj: Student):
         return obj.getMatricule()
+    
+class StudentWriteSerializer(serializers.ModelSerializer):
+    course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all(), allow_null=False, required=False)
+    phone = serializers.PrimaryKeyRelatedField(queryset=Phone.objects.all(), many=True)
+    email = serializers.PrimaryKeyRelatedField(queryset=Email.objects.all(), many=True)
+    class Meta:
+        model = Student
+        exclude = ["status"]    
+
+class AuxilioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Auxilio
+        fields = "__all__"
+        
+        
+class AuxilioRelationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuxilioRelation
+        fields = '__all__'
+
+        
+class AuxilioSerializer(serializers.ModelSerializer):
+    auxilio1 = AuxilioSerializer()
+    auxilio2 = AuxilioSerializer()
+    auxilio3 = AuxilioSerializer()
+    
+    class Meta:
+        model = Auxilio
+        fields = '__all__'
+
+
+class SolicitarAuxilioSerializer(serializers.Serializer):
+    student_id = serializers.IntegerField()
+    ano = serializers.IntegerField()
+    semestre = serializers.IntegerField()
+    tipo1 = serializers.CharField(allow_blank=True)
+    tipo2 = serializers.CharField(allow_blank=True)
+    tipo3 = serializers.CharField(allow_blank=True)
+    
+    
