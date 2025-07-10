@@ -9,8 +9,9 @@ export interface LoginForm
 
 export default async function login(form: LoginForm): Promise<Error | void>
 {
-    const response = await api.post('api/token/', form);
+    // try catch aqui (?)
+    const response = await api.post('/token/', form);
     localStorage.setItem('accessToken', response.data.access);
-    localStorage.setItem('refreshToken', response.data.refres);
+    localStorage.setItem('refreshToken', response.data.refresh);
 }
 
