@@ -11,7 +11,8 @@ from rest_framework.exceptions import NotFound
 from .models import *
 from .serializers import *
 
-from datetime import datetime
+from datetime import datetime, date
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 class PhoneViewSet(ModelViewSet):
@@ -52,9 +53,14 @@ class StudentCreateApiView(APIView):
         
         if serializer.is_valid():
             student: Student = serializer.save()
-            user = User.objects.create(username=serializer.validated_data.get("name"), password=student.getMatricule())
+            user = User.objects.create(username=student.cpf, password="temp")
+            user.set_password(student.getMatricule())
+            user.save()
             student.user = user
             student.save()
+            
+            print(f"'{user.username}'")
+            print(f"'{user.password}'")
             
             return Response(StudentCreateSerializer(student).data, status=status.HTTP_201_CREATED)
         
@@ -87,11 +93,16 @@ class GetAuxilioFromAluno(APIView):
 
         student = get_object_or_404(Student, id=student_id)
 
-        # Ajuste conforme o que define semestre/ano em dataSolicitacao
+        if semester == 1:
+            data_inicio = date(year, 1, 1)
+            data_fim = date(year, 6, 30)
+        else:
+            data_inicio = date(year, 7, 1)
+            data_fim = date(year, 12, 31)
+
         relations = AuxilioRelation.objects.filter(
             student=student,
-            dataSolicitacao__year=year,
-            dataSolicitacao__month__in=(range(1, 7) if semester == '1' else range(7, 13))
+            dataSolicitacao__range=(data_inicio, data_fim)
         )
 
         try:
@@ -168,3 +179,6 @@ class SolicitarAuxilioAPIView(APIView):
         return Response({}, status=status.HTTP_200_OK)
         
         
+        
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

@@ -7,13 +7,9 @@ export interface Course extends BaseEntity
     name: string;
 }
 
-// Tipo base - estrutura comum
 export interface Course extends BaseEntity {
     name: string;
     abr: string;
-    description?: string;
-    duration: number; // em semestres
-    isActive: boolean;
 }
 
 // Para LEITURA - o que vem do backend

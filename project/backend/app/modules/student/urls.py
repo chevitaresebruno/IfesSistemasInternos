@@ -17,5 +17,6 @@ urlpatterns = [
     path('student/new/', StudentCreateApiView.as_view()),
     path('auxilio/getAuxilioFromAluno/<int:student_id>/<int:year>/<int:semester>', GetAuxilioFromAluno.as_view(), name='get_auxilio_from_aluno'),
     path('auxilio/solicitar/', SolicitarAuxilioAPIView.as_view(), name='auxilio_solicitar'),
+    path('login/', CustomTokenObtainPairView.as_view(), name='custom_token_obtain_pair'),
     path('', include(router.urls)),
 ]

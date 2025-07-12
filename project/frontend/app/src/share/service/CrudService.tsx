@@ -3,7 +3,7 @@ import BaseEntity, { ID } from "./BaseEntity";
 import BaseService from "./BaseService";
 
 
-export default class CrudService<T extends BaseEntity> extends BaseService
+export default class CrudService<T extends BaseEntity, TPayload extends BaseEntity = T> extends BaseService
 {
     public constructor(entityName: string)
     {
@@ -22,12 +22,14 @@ export default class CrudService<T extends BaseEntity> extends BaseService
 
     public async save(entity: T): Promise<any>
     {
-        if(entity.id)
-            { return (await api.put(this.idUrl(entity.id), entity)).data; }
+        const serializer = this.serialize(entity);
 
-        let response = await api.post(this.url, entity);
+        if(serializer.id)
+            { return (await api.put(this.idUrl(serializer.id), serializer)).data; }
 
-        entity.id = response.data.id;
+        let response = await api.post(this.url, serializer);
+
+        serializer.id = response.data.id;
 
         return response;
     }
@@ -35,6 +37,11 @@ export default class CrudService<T extends BaseEntity> extends BaseService
     public async delete(entity: T): Promise<any>
     {
         return (await api.delete(this.idUrl(entity.id))).data;
+    }
+
+    protected serialize(entity: T): TPayload
+    {
+        return entity as unknown as TPayload;
     }
 }
 

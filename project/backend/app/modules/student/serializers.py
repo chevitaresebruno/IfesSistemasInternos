@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class PhoneSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,9 +94,41 @@ class AuxilioSerializer(serializers.ModelSerializer):
         
         
 class AuxilioRelationSerializer(serializers.ModelSerializer):
+    auxilio1 = AuxilioSerializer()
+    auxilio2 = AuxilioSerializer()
+    auxilio3 = AuxilioSerializer()
+    
     class Meta:
         model = AuxilioRelation
         fields = '__all__'
+
+    def update(self, instance, validated_data):
+        auxilio1_data = validated_data.pop('auxilio1', None)
+        auxilio2_data = validated_data.pop('auxilio2', None)
+        auxilio3_data = validated_data.pop('auxilio3', None)
+
+        # Atualiza os auxílios, se vierem
+        if auxilio1_data:
+            for attr, value in auxilio1_data.items():
+                setattr(instance.auxilio1, attr, value)
+            instance.auxilio1.save()
+
+        if auxilio2_data:
+            for attr, value in auxilio2_data.items():
+                setattr(instance.auxilio2, attr, value)
+            instance.auxilio2.save()
+
+        if auxilio3_data:
+            for attr, value in auxilio3_data.items():
+                setattr(instance.auxilio3, attr, value)
+            instance.auxilio3.save()
+
+        # Atualiza campos diretos do AuxilioRelation
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
 
         
 class AuxilioSerializer(serializers.ModelSerializer):
@@ -118,3 +150,19 @@ class SolicitarAuxilioSerializer(serializers.Serializer):
     tipo3 = serializers.CharField(allow_blank=True)
     
     
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # Adiciona dados do usuário ao response
+        try:
+            student = Student.objects.filter(user=self.user)[0].pk
+        except Exception:
+            student = 0
+            
+        data['user'] = {
+            'id': self.user.id,
+            'student': student
+        }
+
+        return data

@@ -21,7 +21,17 @@ const LoginLayout: React.FC = () => {
         try
         {
             await login(form);
-            navigate('/gestao/');
+
+            let studentId = localStorage.getItem("studentId"); 
+
+            if( studentId != null && studentId != "0")
+            {
+                navigate(`/gestao/areaDoEstudante/acoes/${localStorage.getItem("studentId")}`);
+            }
+            else
+            {
+                navigate('/gestao/GerenciarEstudantes/listarEstudantes/');
+            }
         }
         catch(err)
             { console.error(e); setError('Email ou senha inválidos'); }
@@ -65,7 +75,7 @@ const LoginLayout: React.FC = () => {
                     </CardContent>
                     <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button type="submit"> Login </Button>
-                        <Button> Cadastrar </Button>
+                        <Button onClick={()=>navigate("/gestao/areaDoEstudante/createAccount")}> Cadastrar </Button>
                     </CardActions>
                 </Card>
             </Box>

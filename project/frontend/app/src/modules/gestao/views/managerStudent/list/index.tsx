@@ -1,57 +1,58 @@
-import { Box, Button, IconButton, Paper, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import StudentService from '../../../service/StudentService';
-import { StudentRead, StudentNew } from '../../../types/Student';
-import AddStudentModal from '../AddStudentModal';
+import StudentService, { emptyStudentWrite } from '../../../service/StudentService';
+import { StudentRead } from '../../../types/Student';
 import StudentListTable from './table';
+import AddStudentModal from '../add';
+import DeleteConfirmation from '../../../../../share/components/DeleteConfirmation';
+import { useNavigate } from 'react-router-dom';
 
 
 const StudentListView: React.FC = () =>
 {
   const [students, setStudents] = useState<StudentRead[]>([]);
-  const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(emptyStudentWrite);
   const studentService = new StudentService();
 
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    studentService.list().then(setStudents);
-  }, []) // Gambiarra para só executar uma vez :D
+
+  useEffect(()=>{ studentService.list().then(setStudents); }, []) // Gambiarra para só executar uma vez :D
 
 
   return (
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" gutterBottom>Gestão de Alunos</Typography>
 
-      <Button variant="contained" onClick={() => setOpenModal(true)} sx={{ mb: 2 }}>
+      <Button
+        variant="contained"
+        onClick={() => {setOpenEditModal(true); setSelectedStudent(emptyStudentWrite); }}
+        sx={{ mb: 2 }}
+      >
         Adicionar Aluno
       </Button>
 
-      <AddStudentModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onSave={()=>{}}
-      />
-
       <StudentListTable
         studentsList={students}
+        viewStudent={(s)=>{if(s){ navigate(`/gestao/GerenciarEstudantes/acompanharEstudante/${s.id}`); }}}
+        editStudent={(s)=>{if(s){setSelectedStudent(StudentService.readToWrite(s)); setOpenEditModal(true)}}}
+        deleteStudent={(s)=>{ if(s){setSelectedStudent(StudentService.readToWrite(s)); setOpenDeleteModal(true)} }}
       />
 
-      <Paper sx={{ p: 2 }}>
-        {students?.map((student) => (
-          <Box
-            key={student.id}
-            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}
-          >
-            <Typography>
-              {student.name} — Matrícula: {student.matricula}
-            </Typography>
-            <IconButton onClick={() => {}}>
-              <DeleteIcon />
-            </IconButton>
-          </Box>
-        ))}
-      </Paper>
+      <AddStudentModal
+        open={openEditModal}
+        close={()=>setOpenEditModal(false)}
+        student={selectedStudent}
+      />
+
+      <DeleteConfirmation
+        open={openDeleteModal}
+        label={`o(a) aluno(a) ${selectedStudent.name}`}
+        content='TODAS as informações salvas do aluno serão apagadas.'
+        onConfirm={async()=>{ studentService.delete(selectedStudent).then(e => setOpenDeleteModal(false)).catch(e => console.error(e)); }} 
+      />
     </Box>
   );
 }
